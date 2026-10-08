@@ -4,6 +4,23 @@
 
 
 **Logos** is a local-first language-learning and text-to-speech plugin for Obsidian.
+## 中文简介
+
+Logos 是一个面向英语学习者的 Obsidian 插件，最初就是为了帮助中国英语学习者而设计的。
+
+主要功能包括：
+
+- 本地文字转语音
+- 英汉词典
+- PDF 朗读
+- 发音练习
+- 单词收藏和复习
+- Windows 和 macOS 支持
+- 核心功能可以离线使用，不需要付费 TTS API
+
+中文用户可以查看简体中文使用手册：
+
+[简体中文用户手册](docs/Logos_用户手册_简体中文_v0.1.0.pdf)
 
 Created and developed by **CourtneyJr (@direwuff)** and **王珑珑**.  
 Developed with programming, debugging, documentation, packaging, and design assistance from **OpenAI ChatGPT**.
