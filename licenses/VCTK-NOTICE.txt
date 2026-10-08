@@ -1,0 +1,23 @@
+VCTK / VITS-VCTK
+
+Logos includes a VITS-VCTK speech model providing additional
+English speakers.
+
+The sherpa-onnx documentation identifies this model as a conversion
+of a VITS model trained on the VCTK corpus.
+
+VCTK Corpus version 0.92:
+University of Edinburgh
+Centre for Speech Technology Research (CSTR)
+
+License:
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Dataset DOI:
+https://doi.org/10.7488/ds/2645
+
+Sherpa-ONNX model documentation:
+https://github.com/k2-fsa/sherpa
+
+Attribution to the VCTK corpus creators and dataset source should
+be preserved in redistributed releases.

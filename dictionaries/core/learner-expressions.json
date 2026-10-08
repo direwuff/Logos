@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "language": "en",
+  "entries": [
+    {
+      "expression": "etc.",
+      "aliases": [
+        "etc"
+      ],
+      "type": "abbreviation",
+      "expanded_form": "et cetera",
+      "definition": "and other similar things; and so on",
+      "chinese": "等等",
+      "example": "Bring pencils, paper, notebooks, etc."
+    },
+    {
+      "expression": "e.g.",
+      "aliases": [
+        "eg"
+      ],
+      "type": "abbreviation",
+      "expanded_form": "for example",
+      "definition": "used to introduce one or more examples",
+      "chinese": "例如",
+      "example": "Some fruits, e.g. apples and oranges, are easy to find."
+    },
+    {
+      "expression": "i.e.",
+      "aliases": [
+        "ie"
+      ],
+      "type": "abbreviation",
+      "expanded_form": "that is",
+      "definition": "used to explain exactly what you mean",
+      "chinese": "也就是说；即",
+      "example": "Meet me at noon, i.e. 12:00 p.m."
+    },
+    {
+      "expression": "ASAP",
+      "aliases": [
+        "asap"
+      ],
+      "type": "initialism",
+      "expanded_form": "as soon as possible",
+      "definition": "as quickly as reasonably possible",
+      "chinese": "尽快",
+      "example": "Please send me the document ASAP."
+    },
+    {
+      "expression": "FYI",
+      "aliases": [
+        "fyi"
+      ],
+      "type": "initialism",
+      "expanded_form": "for your information",
+      "definition": "used when giving someone information they may find useful",
+      "chinese": "供你参考",
+      "example": "FYI, the meeting starts at nine."
+    },
+    {
+      "expression": "PDF",
+      "aliases": [
+        "pdf"
+      ],
+      "type": "initialism",
+      "expanded_form": "Portable Document Format",
+      "definition": "a common document file format that preserves layout",
+      "chinese": "PDF文档格式",
+      "example": "The article is available as a PDF."
+    },
+    {
+      "expression": "AI",
+      "aliases": [
+        "ai"
+      ],
+      "type": "initialism",
+      "expanded_form": "artificial intelligence",
+      "definition": "computer technology designed to perform tasks associated with human intelligence",
+      "chinese": "人工智能",
+      "example": "AI can help students practice language skills."
+    },
+    {
+      "expression": "NASA",
+      "aliases": [
+        "nasa"
+      ],
+      "type": "acronym",
+      "expanded_form": "National Aeronautics and Space Administration",
+      "definition": "the United States government agency responsible for civilian space exploration",
+      "chinese": "美国国家航空航天局",
+      "example": "NASA studies Earth and space."
+    },
+    {
+      "expression": "by the way",
+      "type": "expression",
+      "definition": "used to introduce a new or additional topic in conversation",
+      "chinese": "顺便说一下",
+      "example": "By the way, have you finished your homework?"
+    },
+    {
+      "expression": "to be honest",
+      "type": "expression",
+      "definition": "used before saying what you truly think or feel",
+      "chinese": "老实说；说实话",
+      "example": "To be honest, I found the test difficult."
+    },
+    {
+      "expression": "so far",
+      "type": "expression",
+      "definition": "until the present time",
+      "chinese": "到目前为止",
+      "example": "So far, everything is going well."
+    },
+    {
+      "expression": "of course",
+      "type": "expression",
+      "definition": "used to show that something is expected, obvious, or certainly allowed",
+      "chinese": "当然",
+      "example": "Of course you can ask questions."
+    },
+    {
+      "expression": "piece of cake",
+      "type": "idiom",
+      "definition": "something that is very easy to do",
+      "learner_note": "This expression is not literally about cake.",
+      "chinese": "小菜一碟；非常容易的事情",
+      "example": "The homework was a piece of cake."
+    },
+    {
+      "expression": "under the weather",
+      "type": "idiom",
+      "definition": "feeling slightly sick or unwell",
+      "learner_note": "It describes someone's health, not the weather.",
+      "chinese": "身体不舒服；有点生病",
+      "example": "I'm feeling under the weather today."
+    },
+    {
+      "expression": "break a leg",
+      "type": "idiom",
+      "definition": "a way of wishing someone good luck before a performance",
+      "learner_note": "It does not mean that you want the person to be injured.",
+      "chinese": "祝你好运",
+      "example": "You have a performance tonight? Break a leg!"
+    },
+    {
+      "expression": "call it a day",
+      "type": "idiom",
+      "definition": "to stop working on something for the day",
+      "chinese": "今天就做到这里；收工",
+      "example": "We've done enough work. Let's call it a day."
+    },
+    {
+      "expression": "hit the books",
+      "type": "idiom",
+      "definition": "to begin studying seriously",
+      "chinese": "开始认真学习；用功读书",
+      "example": "I have an exam tomorrow, so I need to hit the books."
+    },
+    {
+      "expression": "out of the blue",
+      "type": "idiom",
+      "definition": "suddenly and unexpectedly",
+      "chinese": "突然地；出乎意料地",
+      "example": "She called me out of the blue."
+    },
+    {
+      "expression": "keep an eye on",
+      "type": "idiom",
+      "definition": "to watch or take care of someone or something",
+      "chinese": "留意；照看",
+      "example": "Could you keep an eye on my bag?"
+    },
+    {
+      "expression": "get the hang of",
+      "type": "idiom",
+      "definition": "to begin to understand how to do something",
+      "chinese": "掌握窍门；逐渐学会",
+      "example": "You'll get the hang of it after some practice."
+    },
+    {
+      "expression": "look up",
+      "type": "phrasal verb",
+      "definition": "to search for information in a book, dictionary, or other source",
+      "chinese": "查找；查询",
+      "example": "Look up the word in the dictionary."
+    },
+    {
+      "expression": "look after",
+      "type": "phrasal verb",
+      "definition": "to take care of someone or something",
+      "chinese": "照顾",
+      "example": "She looks after her younger brother."
+    },
+    {
+      "expression": "give up",
+      "type": "phrasal verb",
+      "definition": "to stop trying to do something",
+      "chinese": "放弃",
+      "example": "Don't give up just because the exercise is difficult."
+    },
+    {
+      "expression": "find out",
+      "type": "phrasal verb",
+      "definition": "to discover or learn information",
+      "chinese": "查明；发现",
+      "example": "I need to find out what happened."
+    },
+    {
+      "expression": "figure out",
+      "type": "phrasal verb",
+      "definition": "to understand or solve something",
+      "chinese": "弄明白；解决",
+      "example": "Can you figure out the answer?"
+    },
+    {
+      "expression": "turn on",
+      "type": "phrasal verb",
+      "definition": "to make a device or machine begin operating",
+      "chinese": "打开；开启",
+      "example": "Please turn on the computer."
+    },
+    {
+      "expression": "turn off",
+      "type": "phrasal verb",
+      "definition": "to make a device or machine stop operating",
+      "chinese": "关闭",
+      "example": "Turn off the lights before you leave."
+    },
+    {
+      "expression": "pick up",
+      "type": "phrasal verb",
+      "definition": "to lift something, collect someone, or learn something informally",
+      "chinese": "拿起；接人；无意中学会",
+      "example": "She picked up some Chinese while living in Beijing."
+    },
+    {
+      "expression": "put off",
+      "type": "phrasal verb",
+      "definition": "to delay doing something until a later time",
+      "chinese": "推迟",
+      "example": "Don't put off your homework until tomorrow."
+    },
+    {
+      "expression": "run into",
+      "type": "phrasal verb",
+      "definition": "to meet someone unexpectedly or encounter a problem",
+      "chinese": "偶遇；遇到问题",
+      "example": "I ran into an old friend yesterday."
+    },
+    {
+      "expression": "carry on",
+      "type": "phrasal verb",
+      "definition": "to continue doing something",
+      "chinese": "继续",
+      "example": "Please carry on with your work."
+    },
+    {
+      "expression": "come across",
+      "type": "phrasal verb",
+      "definition": "to find or meet someone or something unexpectedly",
+      "chinese": "偶然发现；偶遇",
+      "example": "I came across an interesting article."
+    }
+  ]
+}

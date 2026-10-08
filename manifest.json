@@ -1,0 +1,9 @@
+{
+  "id": "logos",
+  "name": "Logos",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Offline multilingual text-to-speech and pronunciation tools for Obsidian.",
+  "author": "CourtneyJr",
+  "isDesktopOnly": true
+}

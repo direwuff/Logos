@@ -1,0 +1,33 @@
+{
+  "name": "logos",
+  "version": "0.1.0",
+  "description": "Offline multilingual text-to-speech and pronunciation tools for Obsidian.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production"
+  },
+  "keywords": [
+    "obsidian",
+    "tts",
+    "text-to-speech",
+    "offline",
+    "language-learning",
+    "phonetics"
+  ],
+  "author": "CourtneyJr",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "builtin-modules": "^5.4.0",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.13.1",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@breezystack/lamejs": "^1.2.7",
+    "pdfjs-dist": "^6.4.299",
+    "sherpa-onnx-node": "^1.13.8"
+  }
+}

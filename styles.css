@@ -1,0 +1,424 @@
+.logos-player {
+  padding: 16px;
+}
+
+.logos-player h2 {
+  margin-top: 0;
+}
+
+.logos-status {
+  margin: 12px 0;
+  opacity: 0.8;
+}
+
+.logos-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.logos-speed-section,
+.logos-voice-section,
+.logos-export-section {
+  margin-top: 18px;
+}
+
+.logos-speed-section label,
+.logos-voice-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.logos-speed-section input {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.logos-speed-section span {
+  margin-left: 8px;
+}
+
+.logos-voice-section select {
+  width: 100%;
+}
+
+.logos-export-section button {
+  margin-right: 8px;
+  margin-top: 6px;
+}
+
+.logos-mode-section {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.logos-mode-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.logos-mode-section select {
+  width: 100%;
+}
+
+.logos-pack-section {
+  margin-top: 18px;
+}
+
+.logos-pack-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.logos-pack-section select {
+  width: 100%;
+}
+
+.logos-progress-section {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.logos-progress-section input {
+  width: 100%;
+}
+
+.logos-time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.logos-processing-section {
+  margin-top: 18px;
+}
+
+.logos-processing-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.logos-processing-section select {
+  width: 100%;
+}
+
+.logos-vctk-filters {
+  margin-top: 18px;
+}
+
+.logos-vctk-filters label {
+  display: block;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.logos-vctk-filters select {
+  width: 100%;
+}
+
+.logos-preview-section {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.logos-preview-section button {
+  flex: 1;
+}
+
+.logos-preview-section {
+  flex-wrap: wrap;
+}
+
+.logos-preview-section button {
+  min-width: 90px;
+}
+
+.logos-list-filter {
+  margin-top: 18px;
+}
+
+.logos-list-filter label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.logos-list-filter select {
+  width: 100%;
+}
+
+.logos-sentence-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.logos-sentence-controls button {
+  flex: 1;
+  min-width: 80px;
+}
+
+.logos-follow-section {
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.logos-follow-section label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logos-practice-section {
+  margin-top: 20px;
+  margin-bottom: 18px;
+}
+
+.logos-practice-section textarea {
+  width: 100%;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.logos-practice-repeat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.logos-practice-repeat select {
+  flex: 1;
+}
+
+.logos-practice-section > button {
+  width: 100%;
+}
+
+.logos-mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.logos-mode-tabs button {
+  flex: 1;
+}
+
+.logos-mode-tabs button.is-active {
+  font-weight: 700;
+  border-color: var(--interactive-accent);
+}
+
+.logos-dictionary-search {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.logos-dictionary-options {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.logos-dictionary-options select {
+  width: 100%;
+}
+
+.logos-dictionary-results {
+  margin-top: 16px;
+}
+
+.logos-dictionary-entry {
+  padding: 12px 0;
+  border-bottom:
+    1px solid
+    var(--background-modifier-border);
+}
+
+.logos-dictionary-entry h4 {
+  margin: 0 0 4px 0;
+  font-size: 1.25em;
+}
+
+.logos-dictionary-meta {
+  opacity: 0.65;
+  font-size: 0.8em;
+}
+
+.logos-dictionary-pronunciation {
+  margin-top: 4px;
+  font-size: 1.05em;
+}
+
+.logos-dictionary-pos {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.logos-dictionary-entry button {
+  margin-top: 8px;
+}
+
+.logos-dictionary-pos {
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.logos-dictionary-senses {
+  margin-top: 6px;
+  padding-left: 22px;
+}
+
+.logos-dictionary-senses li {
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.logos-dictionary-source {
+  display: block;
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+.logos-dictionary-actions {
+  margin-top: 8px;
+}
+
+.logos-related-heading {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.logos-dictionary-related {
+  opacity: 0.88;
+}
+
+.logos-dictionary-related h5 {
+  margin-bottom: 4px;
+}
+
+.logos-sense-examples {
+  margin-top: 7px;
+  margin-bottom: 12px;
+}
+
+.logos-example-row {
+  margin-top: 6px;
+  padding: 7px 8px;
+  border-left: 2px solid var(--background-modifier-border);
+  font-size: 0.92em;
+  line-height: 1.4;
+}
+
+.logos-example-text {
+  display: inline;
+}
+
+.logos-example-label {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.logos-example-row button {
+  margin-left: 6px;
+  padding: 1px 5px;
+  min-height: 23px;
+  font-size: 0.82em;
+}
+
+.logos-example-translation {
+  margin-top: 4px;
+  opacity: 0.75;
+  font-size: 0.92em;
+}
+
+.logos-bilingual-heading {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.logos-bilingual-pair {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-left: 2px solid var(--background-modifier-border);
+}
+
+.logos-bilingual-row {
+  margin-bottom: 5px;
+}
+
+.logos-bilingual-language {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.76em;
+  font-weight: 700;
+  opacity: 0.65;
+}
+
+.logos-bilingual-sentence {
+  display: inline;
+  line-height: 1.4;
+}
+
+.logos-bilingual-row button {
+  margin-left: 6px;
+  padding: 1px 5px;
+  min-height: 23px;
+  font-size: 0.82em;
+}
+
+.logos-bilingual-heading {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.logos-bilingual-pair {
+  margin-bottom: 12px;
+  padding: 8px;
+  border-left: 2px solid var(--background-modifier-border);
+}
+
+.logos-bilingual-row {
+  margin-bottom: 7px;
+}
+
+.logos-bilingual-language {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.76em;
+  font-weight: 700;
+  opacity: 0.65;
+}
+
+.logos-bilingual-sentence {
+  display: inline;
+  line-height: 1.45;
+}
+
+.logos-bilingual-row button {
+  margin-left: 6px;
+  padding: 1px 5px;
+  min-height: 23px;
+  font-size: 0.82em;
+}

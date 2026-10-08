@@ -1,0 +1,12 @@
+Tatoeba
+
+Logos includes example-sentence data derived from Tatoeba.
+
+Tatoeba sentence data may carry Creative Commons licenses and
+attribution requirements.
+
+Source:
+https://tatoeba.org/
+
+For reproducible redistribution, preserve the exact export and
+associated attribution/license metadata used to build Logos.

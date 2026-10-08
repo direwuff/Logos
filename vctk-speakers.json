@@ -1,0 +1,874 @@
+[
+  {
+    "sid": 0,
+    "id": "p267",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Yorkshire"
+  },
+  {
+    "sid": 1,
+    "id": "p330",
+    "age": 26,
+    "gender": "Female",
+    "accent": "American",
+    "region": ""
+  },
+  {
+    "sid": 2,
+    "id": "p285",
+    "age": 21,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Edinburgh"
+  },
+  {
+    "sid": 3,
+    "id": "p234",
+    "age": 22,
+    "gender": "Female",
+    "accent": "Scottish",
+    "region": "West Dumfries"
+  },
+  {
+    "sid": 4,
+    "id": "p311",
+    "age": 21,
+    "gender": "Male",
+    "accent": "American",
+    "region": "Iowa"
+  },
+  {
+    "sid": 5,
+    "id": "p246",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Selkirk"
+  },
+  {
+    "sid": 6,
+    "id": "p363",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Canadian",
+    "region": "Toronto"
+  },
+  {
+    "sid": 7,
+    "id": "p259",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Nottingham"
+  },
+  {
+    "sid": 8,
+    "id": "p270",
+    "age": 21,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Yorkshire"
+  },
+  {
+    "sid": 9,
+    "id": "p251",
+    "age": 26,
+    "gender": "Male",
+    "accent": "Indian",
+    "region": ""
+  },
+  {
+    "sid": 10,
+    "id": "p278",
+    "age": 22,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Cheshire"
+  },
+  {
+    "sid": 11,
+    "id": "p374",
+    "age": 28,
+    "gender": "Male",
+    "accent": "Australian",
+    "region": "English"
+  },
+  {
+    "sid": 12,
+    "id": "p306",
+    "age": 21,
+    "gender": "Female",
+    "accent": "American",
+    "region": "New York"
+  },
+  {
+    "sid": 13,
+    "id": "p292",
+    "age": 23,
+    "gender": "Male",
+    "accent": "NorthernIrish",
+    "region": "Belfast"
+  },
+  {
+    "sid": 14,
+    "id": "p247",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Argyll"
+  },
+  {
+    "sid": 15,
+    "id": "p362",
+    "age": 29,
+    "gender": "Female",
+    "accent": "American",
+    "region": ""
+  },
+  {
+    "sid": 16,
+    "id": "p284",
+    "age": 20,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Fife"
+  },
+  {
+    "sid": 17,
+    "id": "p310",
+    "age": 21,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Tennessee"
+  },
+  {
+    "sid": 18,
+    "id": "p339",
+    "age": 21,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Pennsylvania"
+  },
+  {
+    "sid": 19,
+    "id": "p318",
+    "age": 32,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Napa"
+  },
+  {
+    "sid": 20,
+    "id": "p266",
+    "age": 22,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "Athlone"
+  },
+  {
+    "sid": 21,
+    "id": "p343",
+    "age": 27,
+    "gender": "Female",
+    "accent": "Canadian",
+    "region": "Alberta"
+  },
+  {
+    "sid": 22,
+    "id": "p307",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Canadian",
+    "region": "Ontario"
+  },
+  {
+    "sid": 23,
+    "id": "p293",
+    "age": 22,
+    "gender": "Female",
+    "accent": "NorthernIrish",
+    "region": "Belfast"
+  },
+  {
+    "sid": 24,
+    "id": "p250",
+    "age": 22,
+    "gender": "Female",
+    "accent": "English",
+    "region": "SE England"
+  },
+  {
+    "sid": 25,
+    "id": "p279",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Leicester"
+  },
+  {
+    "sid": 26,
+    "id": "p258",
+    "age": 22,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 27,
+    "id": "p271",
+    "age": 19,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Fife"
+  },
+  {
+    "sid": 28,
+    "id": "p326",
+    "age": 26,
+    "gender": "Male",
+    "accent": "Australian",
+    "region": "English Sydney"
+  },
+  {
+    "sid": 29,
+    "id": "p227",
+    "age": 38,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Cumbria"
+  },
+  {
+    "sid": 30,
+    "id": "p302",
+    "age": 20,
+    "gender": "Male",
+    "accent": "Canadian",
+    "region": "Montreal"
+  },
+  {
+    "sid": 31,
+    "id": "p255",
+    "age": 19,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Galloway"
+  },
+  {
+    "sid": 32,
+    "id": "p274",
+    "age": 22,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Essex"
+  },
+  {
+    "sid": 33,
+    "id": "p351",
+    "age": 21,
+    "gender": "Female",
+    "accent": "NorthernIrish",
+    "region": "Derry"
+  },
+  {
+    "sid": 34,
+    "id": "p323",
+    "age": 19,
+    "gender": "Female",
+    "accent": "SouthAfrican",
+    "region": "Pretoria"
+  },
+  {
+    "sid": 35,
+    "id": "p230",
+    "age": 22,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Stockton-on-tees"
+  },
+  {
+    "sid": 36,
+    "id": "p281",
+    "age": 29,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Edinburgh"
+  },
+  {
+    "sid": 37,
+    "id": "p238",
+    "age": 22,
+    "gender": "Female",
+    "accent": "NorthernIrish",
+    "region": "Belfast"
+  },
+  {
+    "sid": 38,
+    "id": "p334",
+    "age": 18,
+    "gender": "Male",
+    "accent": "American",
+    "region": "Chicago"
+  },
+  {
+    "sid": 39,
+    "id": "p263",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Aberdeen"
+  },
+  {
+    "sid": 40,
+    "id": "p275",
+    "age": 23,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Midlothian"
+  },
+  {
+    "sid": 41,
+    "id": "p254",
+    "age": 21,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Surrey"
+  },
+  {
+    "sid": 42,
+    "id": "p297",
+    "age": 20,
+    "gender": "Female",
+    "accent": "American",
+    "region": "New York"
+  },
+  {
+    "sid": 43,
+    "id": "p226",
+    "age": 22,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Surrey"
+  },
+  {
+    "sid": 44,
+    "id": "p303",
+    "age": 24,
+    "gender": "Female",
+    "accent": "Canadian",
+    "region": "Toronto"
+  },
+  {
+    "sid": 45,
+    "id": "p262",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Scottish",
+    "region": "Edinburgh"
+  },
+  {
+    "sid": 46,
+    "id": "p347",
+    "age": 26,
+    "gender": "Male",
+    "accent": "SouthAfrican",
+    "region": "Johannesburg"
+  },
+  {
+    "sid": 47,
+    "id": "p288",
+    "age": 22,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "Dublin"
+  },
+  {
+    "sid": 48,
+    "id": "p239",
+    "age": 22,
+    "gender": "Female",
+    "accent": "English",
+    "region": "SW England"
+  },
+  {
+    "sid": 49,
+    "id": "p335",
+    "age": 25,
+    "gender": "Female",
+    "accent": "NewZealand",
+    "region": "English"
+  },
+  {
+    "sid": 50,
+    "id": "p231",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 51,
+    "id": "p314",
+    "age": 26,
+    "gender": "Female",
+    "accent": "SouthAfrican",
+    "region": "Cape Town"
+  },
+  {
+    "sid": 52,
+    "id": "p280",
+    "age": 25,
+    "gender": "Female",
+    "accent": "Unknown",
+    "region": "France (mic2 files unavailable)"
+  },
+  {
+    "sid": 53,
+    "id": "p243",
+    "age": 22,
+    "gender": "Male",
+    "accent": "English",
+    "region": "London"
+  },
+  {
+    "sid": 54,
+    "id": "p305",
+    "age": 19,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Philadelphia"
+  },
+  {
+    "sid": 55,
+    "id": "p252",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Edinburgh"
+  },
+  {
+    "sid": 56,
+    "id": "p273",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Suffolk"
+  },
+  {
+    "sid": 57,
+    "id": "p228",
+    "age": 22,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 58,
+    "id": "p299",
+    "age": 25,
+    "gender": "Female",
+    "accent": "American",
+    "region": "California"
+  },
+  {
+    "sid": 59,
+    "id": "p245",
+    "age": 25,
+    "gender": "Male",
+    "accent": "Irish",
+    "region": "Dublin"
+  },
+  {
+    "sid": 60,
+    "id": "p360",
+    "age": 19,
+    "gender": "Male",
+    "accent": "American",
+    "region": "New Jersey"
+  },
+  {
+    "sid": 61,
+    "id": "p237",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Fife"
+  },
+  {
+    "sid": 62,
+    "id": "p312",
+    "age": 19,
+    "gender": "Female",
+    "accent": "Canadian",
+    "region": "Hamilton"
+  },
+  {
+    "sid": 63,
+    "id": "p286",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Newcastle"
+  },
+  {
+    "sid": 64,
+    "id": "p333",
+    "age": 19,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Indiana"
+  },
+  {
+    "sid": 65,
+    "id": "p264",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Scottish",
+    "region": "West Lothian"
+  },
+  {
+    "sid": 66,
+    "id": "p341",
+    "age": 26,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Ohio"
+  },
+  {
+    "sid": 67,
+    "id": "p229",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 68,
+    "id": "p298",
+    "age": 19,
+    "gender": "Male",
+    "accent": "Irish",
+    "region": "Tipperary"
+  },
+  {
+    "sid": 69,
+    "id": "p272",
+    "age": 23,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Edinburgh"
+  },
+  {
+    "sid": 70,
+    "id": "p253",
+    "age": 22,
+    "gender": "Female",
+    "accent": "Welsh",
+    "region": "Cardiff"
+  },
+  {
+    "sid": 71,
+    "id": "p376",
+    "age": 22,
+    "gender": "Male",
+    "accent": "Indian",
+    "region": ""
+  },
+  {
+    "sid": 72,
+    "id": "p304",
+    "age": 22,
+    "gender": "Male",
+    "accent": "NorthernIrish",
+    "region": "Belfast"
+  },
+  {
+    "sid": 73,
+    "id": "p265",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Scottish",
+    "region": "Ross"
+  },
+  {
+    "sid": 74,
+    "id": "p340",
+    "age": 18,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "Dublin"
+  },
+  {
+    "sid": 75,
+    "id": "p236",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Manchester"
+  },
+  {
+    "sid": 76,
+    "id": "p313",
+    "age": 24,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "County Down"
+  },
+  {
+    "sid": 77,
+    "id": "p287",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "York"
+  },
+  {
+    "sid": 78,
+    "id": "p244",
+    "age": 22,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Manchester"
+  },
+  {
+    "sid": 79,
+    "id": "p361",
+    "age": 19,
+    "gender": "Female",
+    "accent": "American",
+    "region": "New Jersey"
+  },
+  {
+    "sid": 80,
+    "id": "p249",
+    "age": 22,
+    "gender": "Female",
+    "accent": "Scottish",
+    "region": "Aberdeen"
+  },
+  {
+    "sid": 81,
+    "id": "p260",
+    "age": 21,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Orkney"
+  },
+  {
+    "sid": 82,
+    "id": "p345",
+    "age": 22,
+    "gender": "Male",
+    "accent": "American",
+    "region": "Florida"
+  },
+  {
+    "sid": 83,
+    "id": "p282",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Newcastle"
+  },
+  {
+    "sid": 84,
+    "id": "p233",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Staffordshire"
+  },
+  {
+    "sid": 85,
+    "id": "p316",
+    "age": 20,
+    "gender": "Male",
+    "accent": "Canadian",
+    "region": "Alberta"
+  },
+  {
+    "sid": 86,
+    "id": "p241",
+    "age": 21,
+    "gender": "Male",
+    "accent": "Scottish",
+    "region": "Perth"
+  },
+  {
+    "sid": 87,
+    "id": "p268",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 88,
+    "id": "p364",
+    "age": 23,
+    "gender": "Male",
+    "accent": "Irish",
+    "region": "Donegal"
+  },
+  {
+    "sid": 89,
+    "id": "p277",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "NE England"
+  },
+  {
+    "sid": 90,
+    "id": "p256",
+    "age": 24,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Birmingham"
+  },
+  {
+    "sid": 91,
+    "id": "p301",
+    "age": 23,
+    "gender": "Female",
+    "accent": "American",
+    "region": "North Carolina"
+  },
+  {
+    "sid": 92,
+    "id": "p295",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "Dublin"
+  },
+  {
+    "sid": 93,
+    "id": "p240",
+    "age": 21,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 94,
+    "id": "p269",
+    "age": 20,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Newcastle"
+  },
+  {
+    "sid": 95,
+    "id": "p283",
+    "age": 24,
+    "gender": "Female",
+    "accent": "Irish",
+    "region": "Cork"
+  },
+  {
+    "sid": 96,
+    "id": "p232",
+    "age": 23,
+    "gender": "Male",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 97,
+    "id": "p317",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Canadian",
+    "region": "Hamilton"
+  },
+  {
+    "sid": 98,
+    "id": "p336",
+    "age": 18,
+    "gender": "Female",
+    "accent": "SouthAfrican",
+    "region": "Johannesburg"
+  },
+  {
+    "sid": 99,
+    "id": "p248",
+    "age": 23,
+    "gender": "Female",
+    "accent": "Indian",
+    "region": ""
+  },
+  {
+    "sid": 100,
+    "id": "p261",
+    "age": 26,
+    "gender": "Female",
+    "accent": "NorthernIrish",
+    "region": "Belfast"
+  },
+  {
+    "sid": 101,
+    "id": "p225",
+    "age": 23,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 102,
+    "id": "p300",
+    "age": 23,
+    "gender": "Female",
+    "accent": "American",
+    "region": "California"
+  },
+  {
+    "sid": 103,
+    "id": "p329",
+    "age": 23,
+    "gender": "Female",
+    "accent": "American",
+    "region": ""
+  },
+  {
+    "sid": 104,
+    "id": "p294",
+    "age": 33,
+    "gender": "Female",
+    "accent": "American",
+    "region": "San Francisco"
+  },
+  {
+    "sid": 105,
+    "id": "p257",
+    "age": 24,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Southern England"
+  },
+  {
+    "sid": 106,
+    "id": "p276",
+    "age": 24,
+    "gender": "Female",
+    "accent": "English",
+    "region": "Oxford"
+  },
+  {
+    "sid": 107,
+    "id": "p308",
+    "age": 18,
+    "gender": "Female",
+    "accent": "American",
+    "region": "Alabama"
+  },
+  {
+    "sid": 108,
+    "id": "sid108",
+    "age": null,
+    "gender": "Unknown",
+    "accent": "Unmapped",
+    "region": "Model speaker not identified in public VITS filelists"
+  }
+]

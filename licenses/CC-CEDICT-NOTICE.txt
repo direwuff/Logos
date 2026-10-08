@@ -1,0 +1,16 @@
+CC-CEDICT
+
+Logos includes dictionary data derived from CC-CEDICT.
+
+CC-CEDICT is licensed under the Creative Commons
+Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
+
+Source:
+https://cc-cedict.org/
+
+Users of redistributed or modified CC-CEDICT-derived data should
+preserve attribution and comply with the ShareAlike requirements
+of the applicable license.
+
+The exact CC-CEDICT snapshot used to build the Logos dictionary
+should be documented for reproducibility.

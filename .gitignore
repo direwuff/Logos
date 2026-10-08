@@ -1,0 +1,102 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+*.map
+
+# Release / installer output
+releases/
+Logos-Windows-Easy-Installer-Build/
+Logos-Windows-Easy-Install/
+Logos-Mac-Easy-Install/
+Logos Mac Installer/
+Logos Mac Models Part 2/
+*.exe
+*.bin
+*.7z
+*.7z.*
+*.zip
+*.dmg
+*.pkg
+
+# Bundled runtimes
+runtime/
+mac-runtime/
+mac-native/
+
+# Large local models
+models/
+
+# Large generated dictionary database
+dictionaries/core/logos-dictionary.sqlite3
+
+# Temporary / generated audio
+*.wav
+*.mp3
+Logos Audio/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+# Backups
+*.bak
+*.backup
+*.before-*
+*~
+
+# Temporary packaging artifacts
+*.tgz
+*.tmp
+
+# Downloaded Node archives
+node-v*-darwin-*.tar.gz
+
+# Development / local testing
+pdf-test.json
+test-kokoro.cjs
+speaker-info.txt
+vctk-test.txt
+vctk-train.txt
+vctk-val.txt
+
+# Temporary README fragment already merged into README.md
+README_ACKNOWLEDGEMENTS.md
+
+# Obsidian per-user plugin data
+data.json
+
+# Raw dictionary construction datasets
+dictionaries/cedict/
+dictionaries/tatoeba/
+dictionaries/wordnet/
+
+# Keep only the small runtime learner-expression resource in core
+dictionaries/core/*
+!dictionaries/core/learner-expressions.json
+
+# Development VCTK corpus metadata
+vctk-corpus-speakers.json
+
+kokoro-worker.cjs
