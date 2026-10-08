@@ -118,6 +118,10 @@ if [ -d licenses ]; then
   cp -a licenses "$DEST/"
 fi
 
+if [ -d docs ]; then
+  cp -a docs "$DEST/"
+fi
+
 if [ -f styles.css ]; then
   cp styles.css "$DEST/"
 fi
@@ -213,6 +217,10 @@ for f in \
   "$DEST/AUTHORS.md" \
   "$DEST/CREDITS.md" \
   "$DEST/licenses/README.md" \
+  "$DEST/docs/INSTALL-WINDOWS.md" \
+  "$DEST/docs/INSTALL-MAC.md" \
+  "$DEST/docs/TROUBLESHOOTING.md" \
+  "$DEST/docs/Logos_User_Manual_English_v0.1.0.pdf" \
   "$DEST/runtime/darwin-arm64/node" \
   "$DEST/runtime/darwin-x64/node" \
   "$DEST/node_modules/sherpa-onnx-darwin-arm64/sherpa-onnx.node" \
