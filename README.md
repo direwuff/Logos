@@ -1,8 +1,9 @@
 # Logos
 
+
 **Logos** is a local-first language-learning and text-to-speech plugin for Obsidian.
 
-Created and developed by **CourtneyJr (@direwuff)** and **珑珑王**.  
+Created and developed by **CourtneyJr (@direwuff)** and **王珑珑**.  
 Developed with programming, debugging, documentation, packaging, and design assistance from **OpenAI ChatGPT**.
 
 ## Features
