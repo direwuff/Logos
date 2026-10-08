@@ -227,12 +227,12 @@ When reporting a bug, include:
 <tr>
 <td align="center">
   <strong>微信支付 WeChat Pay</strong><br><br>
-  <img src="docs/images/wechat-pay.png" width="260">
+  <img src="docs/images/wechat-pay-blurred.png" width="260">
 </td>
 
 <td align="center">
   <strong>支付宝 Alipay</strong><br><br>
-  <img src="docs/images/alipay.png" width="260">
+  <img src="docs/images/alipay-blurred.png" width="260">
 </td>
 </tr>
 </table>
