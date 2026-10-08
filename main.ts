@@ -5388,22 +5388,115 @@ export default class LogosPlugin
     );
 
     // Headings.
+    // Remove Markdown heading markers and give headings a natural
+    // spoken boundary so they do not run into the following text.
     cleaned = cleaned.replace(
-      /^#{1,6}\s+/gm,
-      ""
+      /^#{1,6}\s+(.+)$/gm,
+      (_match, heading: string) => {
+        const spoken =
+          heading.trim();
+
+        if (
+          !spoken ||
+          /[.!?。！？]$/.test(
+            spoken
+          )
+        ) {
+          return spoken;
+        }
+
+        return `${spoken}.`;
+      }
     );
 
     // Blockquotes.
+    // Remove the Markdown quote marker and preserve a natural
+    // spoken boundary between quoted lines.
     cleaned = cleaned.replace(
-      /^>\s?/gm,
-      ""
+      /^>\s?(.*)$/gm,
+      (_match, quote: string) => {
+        const spoken =
+          quote.trim();
+
+        if (
+          !spoken ||
+          /[.!?。！？]$/.test(
+            spoken
+          )
+        ) {
+          return spoken;
+        }
+
+        return `${spoken}.`;
+      }
     );
 
-    // Unordered-list markers.
-    cleaned = cleaned.replace(
-      /^\s*[-*+]\s+/gm,
-      ""
-    );
+    // Markdown lists.
+    // Plain newlines are often too weak to produce an audible
+    // boundary in TTS, so list items become sentence-like units.
+    cleaned = cleaned
+      .split(/\r?\n/)
+      .map(line => {
+        const trimmed =
+          line.trim();
+
+        if (!trimmed) {
+          return "";
+        }
+
+        const isTaskItem =
+          /^[-*+]\s+\[[ xX]\]\s+/.test(
+            trimmed
+          );
+
+        const isUnorderedItem =
+          /^[-*+]\s+/.test(
+            trimmed
+          );
+
+        const isOrderedItem =
+          /^\d+[.)]\s+/.test(
+            trimmed
+          );
+
+        if (
+          isTaskItem ||
+          isUnorderedItem ||
+          isOrderedItem
+        ) {
+          let spoken =
+            trimmed
+              .replace(
+                /^[-*+]\s+\[[ xX]\]\s+/,
+                ""
+              )
+              .replace(
+                /^[-*+]\s+/,
+                ""
+              )
+              .replace(
+                /^\d+[.)]\s+/,
+                ""
+              )
+              .trim();
+
+          // Keep existing sentence-ending punctuation.
+          // Otherwise add a full stop to create a clear pause.
+          if (
+            spoken &&
+            !/[.!?。！？]$/.test(
+              spoken
+            )
+          ) {
+            spoken += ".";
+          }
+
+          return spoken;
+        }
+
+        return line;
+      })
+      .join("\n");
 
     // Useful spoken symbols.
     const replacements:
@@ -5444,6 +5537,14 @@ export default class LogosPlugin
           replacement
         );
     }
+
+    // Give prose commas a slightly stronger TTS pause.
+    // Only commas followed by whitespace are affected, so numeric
+    // formatting such as 1,000 is left unchanged.
+    cleaned = cleaned.replace(
+      /,(?=\s)/g,
+      ";"
+    );
 
     // Collapse excessive whitespace.
     cleaned = cleaned

@@ -12667,17 +12667,63 @@ var LogosPlugin = class extends import_obsidian.Plugin {
       "$1"
     );
     cleaned = cleaned.replace(
-      /^#{1,6}\s+/gm,
-      ""
+      /^#{1,6}\s+(.+)$/gm,
+      (_match, heading) => {
+        const spoken = heading.trim();
+        if (!spoken || /[.!?。！？]$/.test(
+          spoken
+        )) {
+          return spoken;
+        }
+        return `${spoken}.`;
+      }
     );
     cleaned = cleaned.replace(
-      /^>\s?/gm,
-      ""
+      /^>\s?(.*)$/gm,
+      (_match, quote) => {
+        const spoken = quote.trim();
+        if (!spoken || /[.!?。！？]$/.test(
+          spoken
+        )) {
+          return spoken;
+        }
+        return `${spoken}.`;
+      }
     );
-    cleaned = cleaned.replace(
-      /^\s*[-*+]\s+/gm,
-      ""
-    );
+    cleaned = cleaned.split(/\r?\n/).map((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        return "";
+      }
+      const isTaskItem = /^[-*+]\s+\[[ xX]\]\s+/.test(
+        trimmed
+      );
+      const isUnorderedItem = /^[-*+]\s+/.test(
+        trimmed
+      );
+      const isOrderedItem = /^\d+[.)]\s+/.test(
+        trimmed
+      );
+      if (isTaskItem || isUnorderedItem || isOrderedItem) {
+        let spoken = trimmed.replace(
+          /^[-*+]\s+\[[ xX]\]\s+/,
+          ""
+        ).replace(
+          /^[-*+]\s+/,
+          ""
+        ).replace(
+          /^\d+[.)]\s+/,
+          ""
+        ).trim();
+        if (spoken && !/[.!?。！？]$/.test(
+          spoken
+        )) {
+          spoken += ".";
+        }
+        return spoken;
+      }
+      return line;
+    }).join("\n");
     const replacements = [
       [/°C/g, " degrees Celsius "],
       [/°F/g, " degrees Fahrenheit "],
@@ -12709,6 +12755,10 @@ var LogosPlugin = class extends import_obsidian.Plugin {
         replacement
       );
     }
+    cleaned = cleaned.replace(
+      /,(?=\s)/g,
+      ";"
+    );
     cleaned = cleaned.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
     return cleaned;
   }

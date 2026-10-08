@@ -4,6 +4,23 @@ All notable changes to Logos will be documented in this file.
 
 The project follows a simple versioned release history.
 
+## [0.1.1] - 2026-10-08
+
+### Improved
+
+- Improved text-to-speech pacing for more natural reading
+- Added clearer pauses between Markdown bullet-list items
+- Added natural speech boundaries for numbered lists
+- Added natural speech boundaries for Markdown task lists
+- Added natural pauses after Markdown headings
+- Added natural pauses between blockquote lines
+- Slightly increased pauses at prose commas while preserving numeric formatting such as `1,000`
+
+### Fixed
+
+- Fixed list items running together during text-to-speech playback
+- Fixed Markdown structure being stripped without preserving appropriate spoken boundaries
+
 ## [0.1.0] - 2026-10-07
 
 ### Added
