@@ -199,4 +199,24 @@ When reporting a bug, include:
 - Exact error message
 - Screenshot if useful
 
+<h3>🇨🇳 中国用户支持方式</h3>
+
+<p>
+如果 Logos 对你的学习或教学有帮助，并且你愿意支持后续开发，
+也可以通过微信支付或支付宝支持我们。谢谢！
+</p>
+
+<table>
+<tr>
+<td align="center">
+  <strong>微信支付 WeChat Pay</strong><br><br>
+  <img src="docs/images/wechat-pay.png" width="260">
+</td>
+
+<td align="center">
+  <strong>支付宝 Alipay</strong><br><br>
+  <img src="docs/images/alipay.png" width="260">
+</td>
+</tr>
+</table>
 
