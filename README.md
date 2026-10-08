@@ -1,10 +1,25 @@
 # Logos
 
+<img width="1672" height="941" alt="8888e3bc-1ed8-425d-84da-cc7ccf89def7" src="https://github.com/user-attachments/assets/fecda308-b407-4bfc-aa11-b728d3e47daa" />
+
 
 **Logos** is a local-first language-learning and text-to-speech plugin for Obsidian.
 
 Created and developed by **CourtneyJr (@direwuff)** and **王珑珑**.  
 Developed with programming, debugging, documentation, packaging, and design assistance from **OpenAI ChatGPT**.
+
+
+If you'd like to support continued development of Logos and our future projects, you can buy me a coffee below. Thank you!
+
+<h2>☕ Support the Project</h2>
+
+<p align="center">
+  <a href="https://buymeacoffee.com/direwuff">
+    <img src="docs/images/buy-me-a-coffee-banner.png"
+         alt="Support Direwuff on Buy Me a Coffee"
+         width="900">
+  </a>
+</p>
 
 ## Features
 
@@ -156,7 +171,7 @@ Logos was created and developed by **CourtneyJr (@direwuff)** and **珑珑王**,
 ## Authors
 
 **CourtneyJr (@direwuff)**  
-**珑珑王**
+**王珑珑***
 
 OpenAI ChatGPT was used as a development assistant for programming, debugging, documentation, installer workflows, packaging, UI planning, and release preparation.
 
@@ -184,4 +199,4 @@ When reporting a bug, include:
 - Exact error message
 - Screenshot if useful
 
-Please avoid uploading private notes or sensitive documents.
+
