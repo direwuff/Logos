@@ -4,6 +4,14 @@ All notable changes to Logos will be documented in this file.
 
 The project follows a simple versioned release history.
 
+## [Unreleased]
+
+### Fixed
+
+- Keep TTS requests and output scoped to their worker so retired workers cannot cancel replacement requests.
+- Show "Generating, please wait" for repeated Preview Voice / Next Voice clicks during synthesis.
+- Handle asynchronous pipe failures and rejected long-text prefetches during cancellation.
+
 ## [0.1.1] - 2026-10-08
 
 ### Improved

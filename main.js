@@ -11192,6 +11192,10 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
       }
     };
     previewButton.onclick = async () => {
+      if (this.plugin.isGeneratingSpeech()) {
+        new import_obsidian.Notice("Generating, please wait");
+        return;
+      }
       statusEl.setText(
         "Generating voice preview..."
       );
@@ -11201,6 +11205,10 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
       );
     };
     nextVoiceButton.onclick = async () => {
+      if (this.plugin.isGeneratingSpeech()) {
+        new import_obsidian.Notice("Generating, please wait");
+        return;
+      }
       const options = Array.from(
         voiceSelect.options
       );
@@ -11438,8 +11446,7 @@ var LogosPlugin = class extends import_obsidian.Plugin {
     this.playbackGeneration = 0;
     this.activeTtsChild = null;
     this.ttsRequestId = 0;
-    this.ttsStdoutBuffer = "";
-    this.ttsStderrBuffer = "";
+    this.ttsWorkerStderr = /* @__PURE__ */ new WeakMap();
     this.pendingTtsRequests = /* @__PURE__ */ new Map();
     this.chunkPlaybackResolver = null;
     this.currentSpeechChunkFiles = [];
@@ -13321,6 +13328,9 @@ ${pdfText}
           chunks[index + 1],
           index + 1,
           generation
+        ).then(
+          (outputPath) => ({ ok: true, outputPath }),
+          (error) => ({ ok: false, error })
         ) : null;
         const played = await this.playSpeechChunk(
           currentPath,
@@ -13333,7 +13343,9 @@ ${pdfText}
           return false;
         }
         if (nextPromise) {
-          currentPath = await nextPromise;
+          const next = await nextPromise;
+          if (!next.ok) throw next.error;
+          currentPath = next.outputPath;
           if (!currentPath) {
             return false;
           }
@@ -13374,22 +13386,29 @@ ${pdfText}
       text
     );
   }
-  rejectPendingTtsRequests(message) {
+  isGeneratingSpeech() {
+    return this.pendingTtsRequests.size > 0;
+  }
+  ttsFailureDetails(child, error) {
+    const stderr = this.ttsWorkerStderr.get(child);
+    return stderr ? `${error.stack || error.message}
+Recent worker stderr (may include earlier warnings):
+${stderr}` : error.message;
+  }
+  rejectPendingTtsRequests(child, message) {
     const error = new Error(message);
-    for (const pending of this.pendingTtsRequests.values()) {
-      pending.reject(error);
+    for (const [id, pending] of this.pendingTtsRequests) {
+      if (pending.child === child) {
+        this.pendingTtsRequests.delete(id);
+        pending.reject(error);
+      }
     }
-    this.pendingTtsRequests.clear();
   }
   destroyPersistentTtsWorker(reason = "TTS worker stopped.") {
     const child = this.activeTtsChild;
     this.activeTtsChild = null;
-    this.ttsStdoutBuffer = "";
-    this.ttsStderrBuffer = "";
-    this.rejectPendingTtsRequests(
-      reason
-    );
     if (child) {
+      this.rejectPendingTtsRequests(child, reason);
       try {
         child.kill();
       } catch (error) {
@@ -13401,8 +13420,14 @@ ${pdfText}
     }
   }
   ensurePersistentTtsWorker(pluginPath, nodePath, workerPath) {
-    if (this.activeTtsChild && this.activeTtsChild.exitCode === null && !this.activeTtsChild.killed) {
+    if (this.activeTtsChild && this.activeTtsChild.exitCode === null && !this.activeTtsChild.killed && this.activeTtsChild.signalCode === null && !this.activeTtsChild.stdin.destroyed && this.activeTtsChild.stdin.writable) {
       return this.activeTtsChild;
+    }
+    if (this.activeTtsChild) {
+      const old = this.activeTtsChild;
+      this.destroyPersistentTtsWorker(this.ttsFailureDetails(old, new Error(
+        `Replacing unavailable TTS worker (exit code ${old.exitCode}, signal ${old.signalCode}).`
+      )));
     }
     const child = (0, import_child_process.spawn)(
       nodePath,
@@ -13416,22 +13441,24 @@ ${pdfText}
       }
     );
     this.activeTtsChild = child;
-    this.ttsStdoutBuffer = "";
-    this.ttsStderrBuffer = "";
+    let stdoutBuffer = "";
+    let stderrBuffer = "";
+    this.ttsWorkerStderr.set(child, "");
     child.stdout.on(
       "data",
       (data) => {
-        this.ttsStdoutBuffer += data.toString();
+        if (this.activeTtsChild !== child) return;
+        stdoutBuffer += data.toString();
         while (true) {
-          const newlineIndex = this.ttsStdoutBuffer.indexOf("\n");
+          const newlineIndex = stdoutBuffer.indexOf("\n");
           if (newlineIndex === -1) {
             break;
           }
-          const line = this.ttsStdoutBuffer.slice(
+          const line = stdoutBuffer.slice(
             0,
             newlineIndex
           ).trim();
-          this.ttsStdoutBuffer = this.ttsStdoutBuffer.slice(
+          stdoutBuffer = stdoutBuffer.slice(
             newlineIndex + 1
           );
           if (!line) {
@@ -13441,7 +13468,7 @@ ${pdfText}
             const result = JSON.parse(line);
             const id = Number(result.id);
             const pending = this.pendingTtsRequests.get(id);
-            if (!pending) {
+            if (!pending || pending.child !== child) {
               console.warn(
                 "Logos: Received TTS response for unknown request:",
                 result
@@ -13453,6 +13480,10 @@ ${pdfText}
               pending.resolve(
                 result
               );
+              if (![...this.pendingTtsRequests.values()].some((request) => request.child === child)) {
+                stderrBuffer = "";
+                this.ttsWorkerStderr.set(child, "");
+              }
             } else {
               pending.reject(
                 new Error(
@@ -13474,7 +13505,13 @@ ${pdfText}
       "data",
       (data) => {
         const message = data.toString();
-        this.ttsStderrBuffer += message;
+        stderrBuffer += message;
+        const limit = 65536;
+        const omitted = "[Earlier worker stderr omitted: 65,536-character limit reached.]\n";
+        if (stderrBuffer.length > limit) {
+          stderrBuffer = omitted + stderrBuffer.slice(-(limit - omitted.length));
+        }
+        this.ttsWorkerStderr.set(child, stderrBuffer);
         const trimmed = message.trim();
         if (trimmed) {
           console.warn(
@@ -13484,46 +13521,48 @@ ${pdfText}
         }
       }
     );
-    child.on(
-      "error",
-      (error) => {
-        if (this.activeTtsChild === child) {
-          this.activeTtsChild = null;
-        }
-        console.error(
-          "Logos persistent TTS process error:",
-          error
-        );
-        this.rejectPendingTtsRequests(
-          error.message
-        );
+    const onError = (error) => {
+      console.error("Logos persistent TTS process error:", error);
+      const details = this.ttsFailureDetails(child, error);
+      if (this.activeTtsChild === child) {
+        this.destroyPersistentTtsWorker(details);
+      } else {
+        this.rejectPendingTtsRequests(child, details);
       }
-    );
-    child.on(
-      "close",
-      (code, signal) => {
-        if (this.activeTtsChild === child) {
-          this.activeTtsChild = null;
-        }
-        if (this.pendingTtsRequests.size > 0) {
-          const details = this.ttsStderrBuffer.trim();
-          this.rejectPendingTtsRequests(
-            details || `TTS worker exited with code ${code}, signal ${signal}.`
-          );
-        }
-        this.ttsStdoutBuffer = "";
-        this.ttsStderrBuffer = "";
+    };
+    child.on("error", onError);
+    child.stdin.on("error", onError);
+    child.on("close", (code, signal) => {
+      if (this.activeTtsChild === child) {
+        this.activeTtsChild = null;
       }
-    );
+      this.rejectPendingTtsRequests(
+        child,
+        this.ttsFailureDetails(child, new Error(
+          `TTS worker exited with code ${code}, signal ${signal}.`
+        ))
+      );
+      this.ttsWorkerStderr.delete(child);
+    });
     return child;
   }
   sendPersistentTtsRequest(child, request) {
     const id = ++this.ttsRequestId;
     return new Promise(
       (resolve, reject) => {
+        if (this.activeTtsChild !== child || child.killed || child.exitCode !== null || child.signalCode !== null || child.stdin.destroyed || !child.stdin.writable) {
+          reject(new Error("TTS worker is not available."));
+          return;
+        }
+        const rejectRequest = (error) => {
+          if (this.pendingTtsRequests.delete(id)) {
+            reject(this.ttsWorkerStderr.get(child) ? new Error(this.ttsFailureDetails(child, error)) : error);
+          }
+        };
         this.pendingTtsRequests.set(
           id,
           {
+            child,
             resolve,
             reject
           }
@@ -13534,11 +13573,13 @@ ${pdfText}
               id,
               action: "synthesize",
               ...request
-            }) + "\n"
+            }) + "\n",
+            (error) => {
+              if (error) rejectRequest(error);
+            }
           );
         } catch (error) {
-          this.pendingTtsRequests.delete(id);
-          reject(
+          rejectRequest(
             error instanceof Error ? error : new Error(
               String(error)
             )
