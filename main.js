@@ -11428,13 +11428,104 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
     mp3Button.onclick = async () => {
       await this.plugin.exportMp3();
     };
+    const helpSection = container.createEl("section", {
+      cls: "logos-help-section",
+      attr: { "aria-label": "Help" }
+    });
+    helpSection.createEl("h3", { text: "Help" });
+    helpSection.createEl("button", {
+      text: "Help & troubleshooting",
+      cls: "logos-help-button"
+    }).onclick = () => this.plugin.openTtsHelp();
   }
   async onClose() {
+  }
+};
+var LogosHelpModal = class extends import_obsidian.Modal {
+  constructor(plugin) {
+    super(plugin.app);
+    this.plugin = plugin;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.createEl("h2", { text: "Logos \u2014 Help & troubleshooting" });
+    contentEl.createEl("p", {
+      text: "Speech runs locally. You can keep Chinese characters in your vault name."
+    });
+    if (this.plugin.lastTtsError) {
+      contentEl.createEl("h3", { text: "Last speech error" });
+      contentEl.createEl("p", { text: this.plugin.lastTtsError.summary });
+      const details = contentEl.createEl("details");
+      details.createEl("summary", { text: "Technical details (kept on this device)" });
+      details.createEl("pre", {
+        text: this.plugin.lastTtsError.details,
+        cls: "logos-log-output"
+      });
+    }
+    const logs = contentEl.createEl("details", { cls: "logos-tts-logs" });
+    logs.createEl("summary", { text: "Recent speech logs" });
+    logs.createEl("p", {
+      text: "This session only: up to 100 entries and 100,000 characters. Reloading clears logs. Refresh to include new events. Logs may contain local paths; review before sharing."
+    });
+    const controls = logs.createDiv({ cls: "logos-log-controls" });
+    const output = logs.createEl("pre", { cls: "logos-log-output" });
+    const refresh = () => output.setText(this.plugin.getTtsLogText());
+    controls.createEl("button", { text: "Refresh logs" }).onclick = refresh;
+    controls.createEl("button", { text: "Copy logs" }).onclick = async () => {
+      refresh();
+      try {
+        await navigator.clipboard.writeText(output.textContent || "");
+        new import_obsidian.Notice("Speech logs copied.");
+      } catch (error) {
+        console.error("Logos: Could not copy speech logs:", error);
+        new import_obsidian.Notice("Could not copy logs. Select and copy the text below.");
+      }
+    };
+    controls.createEl("button", { text: "Clear logs" }).onclick = () => {
+      this.plugin.clearTtsLogs();
+      refresh();
+    };
+    refresh();
+    const topics = [
+      [
+        "How do I start reading?",
+        "Reader opens the reading panel. Play reads the selected reading mode. Preview Voice plays a fixed voice sample. The Reader tab itself does not generate audio."
+      ],
+      [
+        "While speech is generating",
+        "Model loading and synthesis can take a few seconds. Let it finish, or press Stop to cancel before starting another request."
+      ],
+      [
+        "Missing models or espeak-ng-data",
+        "Restore the selected voice pack under the Logos plugin's models folder. Kokoro needs its model, voices, tokens and the complete espeak-ng-data directory. Chinese text automatically uses Kokoro Multilingual - Fast, so that pack must also be installed."
+      ],
+      [
+        "Why does an error mention /usr/share or Linux?",
+        "The /usr/share/espeak-ng-data path is the speech engine's built-in fallback after it rejects a data path. It does not mean that Linux models are needed. Older workers can reject long absolute paths; Chinese characters take more UTF-8 bytes. This worker uses short relative model paths without renaming your vault. Source paths such as /Users/runner in engine logs identify build files, not locations you need to create."
+      ],
+      [
+        "Audio was generated but does not play",
+        "Try Preview Voice to separate model generation from note reading. Check your output device and volume. Stop and retry. Keep the technical details above when reporting a failure; they may contain local file paths, so review them before sharing."
+      ]
+    ];
+    for (const [question, answer] of topics) {
+      const topic = contentEl.createEl("details");
+      topic.createEl("summary", { text: question });
+      topic.createEl("p", { text: answer });
+    }
+  }
+  onClose() {
+    this.contentEl.empty();
   }
 };
 var LogosPlugin = class extends import_obsidian.Plugin {
   constructor() {
     super(...arguments);
+    this.lastTtsError = null;
+    this.ttsLogs = [];
+    this.ttsLogsTruncated = false;
+    this.loggedTtsErrors = /* @__PURE__ */ new WeakSet();
     this.playbackGeneration = 0;
     this.activeTtsChild = null;
     this.ttsRequestId = 0;
@@ -11473,6 +11564,61 @@ var LogosPlugin = class extends import_obsidian.Plugin {
     this.learnerExpressionKeys = null;
     this.voiceListMode = "all";
     this.audioProcessing = "normalize";
+  }
+  recordTtsLog(message) {
+    let entry = `[${(/* @__PURE__ */ new Date()).toISOString()}] ${message}`;
+    if (entry.length > 1e5) {
+      entry = entry.slice(-1e5);
+      this.ttsLogsTruncated = true;
+    }
+    this.ttsLogs.push(entry);
+    while (this.ttsLogs.length > 100 || this.ttsLogs.join("\n").length > 1e5) {
+      this.ttsLogs.shift();
+      this.ttsLogsTruncated = true;
+    }
+  }
+  getTtsLogText() {
+    const prefix = this.ttsLogsTruncated ? "[Older log content omitted: session log limit reached.]\n" : "";
+    return prefix + (this.ttsLogs.join("\n") || "No speech logs in this session.");
+  }
+  clearTtsLogs() {
+    this.ttsLogs = [];
+    this.ttsLogsTruncated = false;
+    this.loggedTtsErrors = /* @__PURE__ */ new WeakSet();
+  }
+  ttsErrorDetails(error) {
+    const details = [];
+    const seen = /* @__PURE__ */ new Set();
+    let current = error;
+    while (!seen.has(current)) {
+      seen.add(current);
+      details.push(current instanceof Error ? current.stack || current.message : String(current));
+      if (!current || typeof current !== "object" || !("cause" in current) || current.cause == null) break;
+      current = current.cause;
+    }
+    return details.join("\nCaused by: ");
+  }
+  openTtsHelp() {
+    new LogosHelpModal(this).open();
+  }
+  showTtsError(error) {
+    const details = this.ttsErrorDetails(error);
+    if (!(error instanceof Error) || !this.loggedTtsErrors.has(error)) {
+      this.recordTtsLog(details);
+    }
+    let summary = "Speech generation failed. Stop and retry, then check Help & troubleshooting.";
+    if (/Model files are missing or unreadable/i.test(details)) {
+      summary = "Model files are missing or unreadable. Restore the selected voice pack; Help lists the required files.";
+    } else if (/espeak-ng-data|phontab/i.test(details)) {
+      summary = "Speech data could not be loaded. Check the voice pack and path guidance in Help; a /usr/share path is an engine fallback.";
+    } else if (/ENOENT|EACCES|EPERM/i.test(details)) {
+      summary = "The speech worker could not start or access its files. Check the Logos installation and permissions in Help.";
+    }
+    this.lastTtsError = { summary, details };
+    const message = document.createDocumentFragment();
+    message.createSpan({ text: "Logos: " + summary + " " });
+    message.createEl("button", { text: "Help" }).onclick = () => this.openTtsHelp();
+    new import_obsidian.Notice(message, 12e3);
   }
   async onload() {
     console.log("Logos loaded");
@@ -11596,6 +11742,11 @@ var LogosPlugin = class extends import_obsidian.Plugin {
       callback: async () => {
         await this.activateView();
       }
+    });
+    this.addCommand({
+      id: "help",
+      name: "Help & troubleshooting",
+      callback: () => this.openTtsHelp()
     });
     this.addCommand({
       id: "read-current-mode",
@@ -13348,9 +13499,7 @@ ${pdfText}
         "Logos long-text playback error:",
         error
       );
-      new import_obsidian.Notice(
-        `Logos: Long-text speech failed: ${error instanceof Error ? error.message : String(error)}`
-      );
+      this.showTtsError(error);
       return false;
     }
   }
@@ -13415,6 +13564,17 @@ ${pdfText}
         )
       }
     );
+    child.stderr.on("data", (data) => {
+      this.recordTtsLog(`Worker ${child.pid || "unknown"} stderr:
+${data.toString()}`);
+    });
+    child.on("error", (error) => {
+      this.recordTtsLog(`Worker ${child.pid || "unknown"} error:
+${this.ttsErrorDetails(error)}`);
+    });
+    child.on("close", (code, signal) => {
+      this.recordTtsLog(`Worker ${child.pid || "unknown"} closed: code ${code}, signal ${signal}.`);
+    });
     this.activeTtsChild = child;
     this.ttsStdoutBuffer = "";
     this.ttsStderrBuffer = "";
@@ -13439,6 +13599,10 @@ ${pdfText}
           }
           try {
             const result = JSON.parse(line);
+            if (!result.success && result.error) {
+              this.recordTtsLog(`Worker ${child.pid || "unknown"} response error:
+${result.error}`);
+            }
             const id = Number(result.id);
             const pending = this.pendingTtsRequests.get(id);
             if (!pending) {
@@ -13454,11 +13618,9 @@ ${pdfText}
                 result
               );
             } else {
-              pending.reject(
-                new Error(
-                  result.error || "Speech generation failed."
-                )
-              );
+              const error = new Error(result.error || "Speech generation failed.");
+              if (result.error) this.loggedTtsErrors.add(error);
+              pending.reject(error);
             }
           } catch (error) {
             console.error(
@@ -13672,9 +13834,7 @@ ${pdfText}
         "Logos persistent TTS error:",
         error
       );
-      new import_obsidian.Notice(
-        `Logos: Speech generation failed: ${error instanceof Error ? error.message : String(error)}`
-      );
+      this.showTtsError(error);
       return false;
     }
   }

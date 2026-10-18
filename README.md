@@ -133,6 +133,15 @@ For a clean update:
 5. Install the new version
 6. Reopen Obsidian and enable Logos
 
+## Help & troubleshooting
+
+Open **Help & troubleshooting** in the Logos panel or the command palette.
+
+- **Reader** opens the reading panel. Use **Play** to read and **Preview Voice** to hear a sample.
+- Keep the selected voice pack complete in `Logos/models`. Chinese text automatically uses the **Kokoro Multilingual - Fast** pack.
+- Chinese vault names are supported by using short relative model paths in the worker. Older workers can hit eSpeak's native path-length limit; `/usr/share/espeak-ng-data` in an error is a built-in fallback, not a request to install Linux models.
+- Speech errors provide a brief explanation and a **Help** button. Open **Technical details** in Help to read the error stack and underlying causes. **Recent speech logs** provides refresh, copy and clear controls for this session (up to 100 entries and 100,000 characters, with an omission notice when the limit is reached). Reloading clears logs. Review local paths before sharing diagnostics.
+
 ## User Manuals
 
 This release includes user manuals in:

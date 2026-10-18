@@ -1,9 +1,13 @@
 const sherpa = require("sherpa-onnx-node");
 const path = require("path");
 const readline = require("readline");
+const fs = require("fs");
 
-const modelsDir =
-  path.join(__dirname, "models");
+// eSpeak uses a fixed-size buffer for its data path. Keep native model
+// paths short even when the vault's absolute path is long or non-ASCII.
+// This changes only the dedicated worker's cwd, not Obsidian's.
+process.chdir(__dirname);
+const modelsDir = "models";
 
 let currentPack = null;
 let currentTts = null;
@@ -204,6 +208,33 @@ function buildModelConfig(pack) {
   );
 }
 
+function validateModelFiles(config) {
+  const model = config.kokoro || config.vits;
+  const files = [model.model, model.voices, model.tokens];
+  if (model.lexicon) files.push(...model.lexicon.split(","));
+  if (model.dataDir) {
+    for (const name of ["phontab", "phondata", "phonindex", "en_dict"]) {
+      files.push(path.join(model.dataDir, name));
+    }
+  }
+  const missing = [];
+  for (const file of files.filter(Boolean)) {
+    try {
+      fs.accessSync(file, fs.constants.R_OK);
+      if (!fs.statSync(file).isFile()) throw new Error("Not a file");
+    } catch (error) {
+      const details = error && error.stack ? error.stack : String(error);
+      missing.push(`${path.resolve(__dirname, file)}\n${details}`);
+    }
+  }
+  if (missing.length) {
+    throw new Error(
+      "Model files are missing or unreadable. Restore the selected voice pack " +
+      "in Logos/models.\n" + missing.join("\n")
+    );
+  }
+}
+
 function getTts(pack) {
   if (
     currentTts &&
@@ -217,6 +248,8 @@ function getTts(pack) {
 
   const modelConfig =
     buildModelConfig(pack);
+
+  validateModelFiles(modelConfig);
 
   const config = {
     model: modelConfig,
