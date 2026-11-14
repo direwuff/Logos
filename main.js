@@ -9964,11 +9964,32 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
     const resultsContainer = dictionaryContainer.createDiv({
       cls: "logos-dictionary-results"
     });
+    let displayedLookupKey = null;
+    let toggleDisplayedEntry;
+    let latestSearch = 0;
+    let pendingSearch = null;
     const runDictionarySearch = async (toggleFirstResult = false) => {
-      var _a2;
       const query = dictionarySearch.value.trim() || this.plugin.getDictionarySelection(
         dictionarySearch.ownerDocument.defaultView
       );
+      const lookupKey = JSON.stringify([
+        query,
+        this.plugin.dictionaryLanguage,
+        this.plugin.dictionaryMatchMode
+      ]);
+      if (toggleFirstResult && displayedLookupKey === lookupKey) {
+        await (toggleDisplayedEntry == null ? void 0 : toggleDisplayedEntry());
+        return;
+      }
+      if (toggleFirstResult && (pendingSearch == null ? void 0 : pendingSearch.key) === lookupKey) {
+        await pendingSearch.results;
+        if (displayedLookupKey === lookupKey) await (toggleDisplayedEntry == null ? void 0 : toggleDisplayedEntry());
+        return;
+      }
+      const request = ++latestSearch;
+      displayedLookupKey = null;
+      toggleDisplayedEntry = void 0;
+      pendingSearch = null;
       resultsContainer.empty();
       if (!query) {
         resultsContainer.createEl(
@@ -9985,9 +10006,14 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
           text: "Searching..."
         }
       );
-      const results = await this.plugin.searchDictionary(
+      const search = this.plugin.searchDictionary(
         query
       );
+      pendingSearch = { key: lookupKey, results: search };
+      const results = await search;
+      if (request !== latestSearch) return;
+      pendingSearch = null;
+      displayedLookupKey = lookupKey;
       resultsContainer.empty();
       if (results.length === 0) {
         resultsContainer.createEl(
@@ -10076,8 +10102,8 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
             );
           };
           updateSaveButton();
-          const saveEntry = async (toggle = false) => {
-            if (toggle && this.plugin.isVocabularySaved(first.word, first.language)) {
+          const saveEntry = async () => {
+            if (this.plugin.isVocabularySaved(first.word, first.language)) {
               await this.plugin.removeVocabularyItem(first.word, first.language);
               updateSaveButton();
               return;
@@ -10133,7 +10159,7 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
             updateSaveButton();
           };
           saveButton.onclick = () => saveEntry();
-          saveActions.push(() => saveEntry(true));
+          saveActions.push(saveEntry);
           card.createEl(
             "div",
             {
@@ -10337,9 +10363,8 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
           true
         );
       }
-      if (toggleFirstResult) {
-        await ((_a2 = saveActions[0]) == null ? void 0 : _a2.call(saveActions));
-      }
+      toggleDisplayedEntry = saveActions[0];
+      if (toggleFirstResult) await (toggleDisplayedEntry == null ? void 0 : toggleDisplayedEntry());
     };
     this.dictionaryKeydown = (event) => {
       var _a2, _b, _c, _d;

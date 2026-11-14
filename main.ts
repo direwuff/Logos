@@ -314,6 +314,11 @@ class LogosPlayerView extends ItemView {
         cls: "logos-dictionary-results"
       });
 
+    let displayedLookupKey: string | null = null;
+    let toggleDisplayedEntry: (() => Promise<void>) | undefined;
+    let latestSearch = 0;
+    let pendingSearch: { key: string; results: Promise<any[]> } | null = null;
+
     const runDictionarySearch =
       async (toggleFirstResult = false) => {
 
@@ -323,6 +328,25 @@ class LogosPlayerView extends ItemView {
             dictionarySearch.ownerDocument.defaultView!
           );
 
+        const lookupKey = JSON.stringify([
+          query, this.plugin.dictionaryLanguage, this.plugin.dictionaryMatchMode
+        ]);
+
+        if (toggleFirstResult && displayedLookupKey === lookupKey) {
+          await toggleDisplayedEntry?.();
+          return;
+        }
+
+        if (toggleFirstResult && pendingSearch?.key === lookupKey) {
+          await pendingSearch.results;
+          if (displayedLookupKey === lookupKey) await toggleDisplayedEntry?.();
+          return;
+        }
+
+        const request = ++latestSearch;
+        displayedLookupKey = null;
+        toggleDisplayedEntry = undefined;
+        pendingSearch = null;
         resultsContainer.empty();
 
         if (!query) {
@@ -344,12 +368,17 @@ class LogosPlayerView extends ItemView {
           }
         );
 
-        const results =
-          await this.plugin
+        const search =
+          this.plugin
             .searchDictionary(
               query
             );
 
+        pendingSearch = { key: lookupKey, results: search };
+        const results = await search;
+        if (request !== latestSearch) return;
+        pendingSearch = null;
+        displayedLookupKey = lookupKey;
         resultsContainer.empty();
 
         if (
@@ -523,9 +552,9 @@ class LogosPlayerView extends ItemView {
             updateSaveButton();
 
             const saveEntry =
-              async (toggle = false) => {
+              async () => {
 
-                if (toggle && this.plugin.isVocabularySaved(first.word, first.language)) {
+                if (this.plugin.isVocabularySaved(first.word, first.language)) {
                   await this.plugin.removeVocabularyItem(first.word, first.language);
                   updateSaveButton();
                   return;
@@ -629,7 +658,7 @@ class LogosPlayerView extends ItemView {
               };
 
             saveButton.onclick = () => saveEntry();
-            saveActions.push(() => saveEntry(true));
+            saveActions.push(saveEntry);
 
             card.createEl(
               "div",
@@ -986,9 +1015,8 @@ class LogosPlayerView extends ItemView {
           );
         }
 
-        if (toggleFirstResult) {
-          await saveActions[0]?.();
-        }
+        toggleDisplayedEntry = saveActions[0];
+        if (toggleFirstResult) await toggleDisplayedEntry?.();
       };
 
     this.dictionaryKeydown = event => {
