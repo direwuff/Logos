@@ -37,7 +37,7 @@ var import_child_process = require("child_process");
 var path = __toESM(require("path"), 1);
 var fs = __toESM(require("fs"), 1);
 
-// node_modules/@breezystack/lamejs/dist/lamejs.js
+// ../Logos/node_modules/@breezystack/lamejs/dist/lamejs.js
 var fa = {};
 function Xa(w) {
   return new Int8Array(w);
@@ -9819,6 +9819,7 @@ var DEFAULT_SETTINGS = {
 var LogosPlayerView = class extends import_obsidian.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
+    this.dictionaryKeydown = null;
     this.plugin = plugin;
   }
   getViewType() {
@@ -9831,6 +9832,15 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
     return "audio-lines";
   }
   async onOpen() {
+    this.registerDomEvent(
+      this.containerEl.ownerDocument,
+      "keydown",
+      (event) => {
+        var _a2;
+        return (_a2 = this.dictionaryKeydown) == null ? void 0 : _a2.call(this, event);
+      },
+      true
+    );
     this.render();
   }
   render() {
@@ -9954,14 +9964,17 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
     const resultsContainer = dictionaryContainer.createDiv({
       cls: "logos-dictionary-results"
     });
-    const runDictionarySearch = async () => {
-      const query = dictionarySearch.value.trim();
+    const runDictionarySearch = async (toggleFirstResult = false) => {
+      var _a2;
+      const query = dictionarySearch.value.trim() || this.plugin.getDictionarySelection(
+        dictionarySearch.ownerDocument.defaultView
+      );
       resultsContainer.empty();
       if (!query) {
         resultsContainer.createEl(
           "p",
           {
-            text: "Enter a word to search."
+            text: "Enter a word, or select text and click Search (Enter in reading view)."
           }
         );
         return;
@@ -9997,6 +10010,7 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
       const relatedResults = results.filter(
         (result) => String(result.word).toLocaleLowerCase() !== normalizedQuery
       );
+      const saveActions = [];
       const renderResultGroups = (resultList, related = false) => {
         const wordGroups = /* @__PURE__ */ new Map();
         for (const result of resultList) {
@@ -10062,7 +10076,12 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
             );
           };
           updateSaveButton();
-          saveButton.onclick = async () => {
+          const saveEntry = async (toggle = false) => {
+            if (toggle && this.plugin.isVocabularySaved(first.word, first.language)) {
+              await this.plugin.removeVocabularyItem(first.word, first.language);
+              updateSaveButton();
+              return;
+            }
             const firstDefinition = group.find(
               (item) => String(
                 item.definition || ""
@@ -10113,6 +10132,8 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
             });
             updateSaveButton();
           };
+          saveButton.onclick = () => saveEntry();
+          saveActions.push(() => saveEntry(true));
           card.createEl(
             "div",
             {
@@ -10315,6 +10336,29 @@ var LogosPlayerView = class extends import_obsidian.ItemView {
           relatedResults,
           true
         );
+      }
+      if (toggleFirstResult) {
+        await ((_a2 = saveActions[0]) == null ? void 0 : _a2.call(saveActions));
+      }
+    };
+    this.dictionaryKeydown = (event) => {
+      var _a2, _b, _c, _d;
+      if (event.key !== "Enter" && event.key !== "s" || event.defaultPrevented || event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || this.plugin.logosMode !== "dictionary" || !dictionaryContainer.isShown()) return;
+      const target = event.target;
+      if ((_a2 = target == null ? void 0 : target.closest) == null ? void 0 : _a2.call(
+        target,
+        'input, textarea, select, button, a, [contenteditable]:not([contenteditable="false"]), [role="textbox"], .cm-editor'
+      )) return;
+      const selection = (_b = dictionarySearch.ownerDocument.defaultView) == null ? void 0 : _b.getSelection();
+      const readingView = (_d = (_c = selection == null ? void 0 : selection.anchorNode) == null ? void 0 : _c.parentElement) == null ? void 0 : _d.closest(".markdown-preview-view");
+      if (!(selection == null ? void 0 : selection.toString().trim()) || !readingView || !selection.focusNode || !readingView.contains(selection.focusNode)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      void runDictionarySearch(event.key === "s");
+    };
+    dictionarySearchButton.onmousedown = (event) => {
+      if (event.button === 0) {
+        event.preventDefault();
       }
     };
     dictionarySearchButton.onclick = () => {
@@ -11679,6 +11723,12 @@ var LogosPlugin = class extends import_obsidian.Plugin {
       (item) => item.key === key
     );
   }
+  async removeVocabularyItem(word, language) {
+    const key = this.getVocabularyKey(word, language);
+    this.savedVocabulary = this.savedVocabulary.filter((item) => item.key !== key);
+    await this.saveSettings();
+    new import_obsidian.Notice(`Removed "${word}" from Vocabulary.`);
+  }
   async saveVocabularyItem(item) {
     const key = this.getVocabularyKey(
       item.word,
@@ -12615,6 +12665,22 @@ var LogosPlugin = class extends import_obsidian.Plugin {
       return this.lastMarkdownView.editor;
     }
     return null;
+  }
+  getDictionarySelection(ownerWindow) {
+    var _a2, _b, _c;
+    const selection = ownerWindow.getSelection();
+    const inPlayer = (node) => {
+      var _a3;
+      return (_a3 = (node == null ? void 0 : node.nodeType) === 1 ? node : node == null ? void 0 : node.parentElement) == null ? void 0 : _a3.closest(".logos-player");
+    };
+    if (selection && !inPlayer(selection.anchorNode) && !inPlayer(selection.focusNode)) {
+      const text = selection.toString().trim();
+      if (text) return text;
+    }
+    if (((_a2 = this.app.workspace.getActiveFile()) == null ? void 0 : _a2.extension) === "md") {
+      return (_c = (_b = this.getCurrentEditor()) == null ? void 0 : _b.getSelection().trim()) != null ? _c : "";
+    }
+    return "";
   }
   prepareTextForSpeech(text) {
     let cleaned = text;

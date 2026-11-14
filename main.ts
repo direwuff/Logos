@@ -87,6 +87,7 @@ const DEFAULT_SETTINGS: LogosSettings = {
 
 class LogosPlayerView extends ItemView {
   plugin: LogosPlugin;
+  private dictionaryKeydown: ((event: KeyboardEvent) => void) | null = null;
 
   constructor(
     leaf: WorkspaceLeaf,
@@ -109,6 +110,12 @@ class LogosPlayerView extends ItemView {
   }
 
   async onOpen() {
+    this.registerDomEvent(
+      this.containerEl.ownerDocument,
+      "keydown",
+      event => this.dictionaryKeydown?.(event),
+      true
+    );
     this.render();
   }
 
@@ -308,10 +315,13 @@ class LogosPlayerView extends ItemView {
       });
 
     const runDictionarySearch =
-      async () => {
+      async (toggleFirstResult = false) => {
 
         const query =
-          dictionarySearch.value.trim();
+          dictionarySearch.value.trim() ||
+          this.plugin.getDictionarySelection(
+            dictionarySearch.ownerDocument.defaultView!
+          );
 
         resultsContainer.empty();
 
@@ -320,7 +330,7 @@ class LogosPlayerView extends ItemView {
             "p",
             {
               text:
-                "Enter a word to search."
+                "Enter a word, or select text and click Search (Enter in reading view)."
             }
           );
 
@@ -381,6 +391,8 @@ class LogosPlayerView extends ItemView {
                 .toLocaleLowerCase() !==
               normalizedQuery
           );
+
+        const saveActions: (() => Promise<void>)[] = [];
 
         const renderResultGroups = (
           resultList: any[],
@@ -510,8 +522,14 @@ class LogosPlayerView extends ItemView {
 
             updateSaveButton();
 
-            saveButton.onclick =
-              async () => {
+            const saveEntry =
+              async (toggle = false) => {
+
+                if (toggle && this.plugin.isVocabularySaved(first.word, first.language)) {
+                  await this.plugin.removeVocabularyItem(first.word, first.language);
+                  updateSaveButton();
+                  return;
+                }
 
                 const firstDefinition =
                   group.find(
@@ -609,6 +627,9 @@ class LogosPlayerView extends ItemView {
 
                 updateSaveButton();
               };
+
+            saveButton.onclick = () => saveEntry();
+            saveActions.push(() => saveEntry(true));
 
             card.createEl(
               "div",
@@ -963,6 +984,42 @@ class LogosPlayerView extends ItemView {
             relatedResults,
             true
           );
+        }
+
+        if (toggleFirstResult) {
+          await saveActions[0]?.();
+        }
+      };
+
+    this.dictionaryKeydown = event => {
+      if (
+        (event.key !== "Enter" && event.key !== "s") || event.defaultPrevented || event.repeat ||
+        event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+        this.plugin.logosMode !== "dictionary" || !dictionaryContainer.isShown()
+      ) return;
+
+      const target = event.target as HTMLElement | null;
+      if (target?.closest?.(
+        'input, textarea, select, button, a, [contenteditable]:not([contenteditable="false"]), [role="textbox"], .cm-editor'
+      )) return;
+
+      const selection = dictionarySearch.ownerDocument.defaultView?.getSelection();
+      const readingView = selection?.anchorNode?.parentElement?.closest(".markdown-preview-view");
+      if (
+        !selection?.toString().trim() || !readingView ||
+        !selection.focusNode || !readingView.contains(selection.focusNode)
+      ) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      void runDictionarySearch(event.key === "s");
+    };
+
+    // Keep reading-view and PDF selections when the button takes focus.
+    dictionarySearchButton.onmousedown =
+      event => {
+        if (event.button === 0) {
+          event.preventDefault();
         }
       };
 
@@ -3569,6 +3626,13 @@ export default class LogosPlugin
       );
   }
 
+  async removeVocabularyItem(word: string, language: string): Promise<void> {
+    const key = this.getVocabularyKey(word, language);
+    this.savedVocabulary = this.savedVocabulary.filter(item => item.key !== key);
+    await this.saveSettings();
+    new Notice(`Removed "${word}" from Vocabulary.`);
+  }
+
   async saveVocabularyItem(
     item: Omit<
       SavedVocabularyItem,
@@ -5307,6 +5371,26 @@ export default class LogosPlugin
     }
 
     return null;
+  }
+
+  getDictionarySelection(ownerWindow: Window): string {
+    const selection = ownerWindow.getSelection();
+    const inPlayer = (node: Node | null) =>
+      (node?.nodeType === 1 ? node as Element : node?.parentElement)
+        ?.closest(".logos-player");
+
+    if (selection && !inPlayer(selection.anchorNode) && !inPlayer(selection.focusNode)) {
+      const text = selection.toString().trim();
+      if (text) return text;
+    }
+
+    // CodeMirror retains its selection when focus moves to the sidebar.
+    // Avoid reusing a previous note's selection while a PDF is active.
+    if (this.app.workspace.getActiveFile()?.extension === "md") {
+      return this.getCurrentEditor()?.getSelection().trim() ?? "";
+    }
+
+    return "";
   }
 
   prepareTextForSpeech(

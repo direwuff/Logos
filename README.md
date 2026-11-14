@@ -59,6 +59,8 @@ If you'd like to support continued development of Logos and our future projects,
 - Searchable PDF text reading
 - Direct PDF text-selection reading
 - English and Chinese dictionary lookup
+- Dictionary Search uses selected text when its search field is empty; typed text takes priority.
+- In Markdown reading mode, select text with the Dictionary panel visible: press Enter to look it up, or `s` to toggle the first result in Saved Vocabulary. These shortcuts ignore typing fields, modifier keys, key repeats, and IME composition.
 - English morphology / lemma routing
 - Idioms, phrasal verbs, abbreviations, and learner expressions
 - Right-click selected-text lookup and speech
